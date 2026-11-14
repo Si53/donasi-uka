@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ activity.title }} - Layanan Kakak Asuh PVVD Bandung{% endblock %}
+
+{% block content %}
+<div class="py-12 bg-warmBg min-h-screen">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        
+        <!-- Breadcrumbs Navigation -->
+        <nav class="flex items-center gap-2 text-xs font-semibold text-slate-500">
+            <a href="{% url 'core:index' %}" class="hover:text-brandBlue transition-colors">Beranda</a>
+            <span>/</span>
+            <a href="{% url 'core:index' %}#kegiatan" class="hover:text-brandBlue transition-colors">Kegiatan & Dokumentasi</a>
+            <span>/</span>
+            <span class="text-brandBlue truncate max-w-xs">{{ activity.title }}</span>
+        </nav>
+
+        <!-- Article Card -->
+        <article class="bg-white rounded-[2rem] p-6 sm:p-10 border border-stone-200/90 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-6">
+            
+            <!-- Metadata Header -->
+            <div class="space-y-3 pb-6 border-b border-stone-100">
+                <div class="flex items-center gap-2.5">
+                    <span class="px-3.5 py-1 rounded-full bg-amber-100 text-brandBlue text-xs font-bold">
+                        📅 {{ activity.activity_date|date:"d F Y" }}
+                    </span>
+                    <span class="text-xs text-stone-400">Penyaluran Bantuan Resmi</span>
+                </div>
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-slate-900 leading-tight">
+                    {{ activity.title }}
+                </h1>
+            </div>
+
+            <!-- Thumbnail if available -->
+            {% if activity.thumbnail %}
+            <div class="rounded-2xl overflow-hidden shadow-md max-h-96 bg-stone-100">
+                <img src="{{ activity.thumbnail.url }}" alt="{{ activity.title }}" class="w-full h-full object-cover">
+            </div>
+            {% endif %}
+
+            <!-- Content Body -->
+            <div class="prose max-w-none text-stone-700 leading-relaxed text-base sm:text-lg whitespace-pre-line">
+                {{ activity.content }}
+            </div>
+
+            <!-- Call to action in article footer -->
+            <div class="mt-10 p-6 rounded-2xl bg-warmCard border border-amber-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-base font-bold text-brandBlue font-serif">Mari Berbagi Bersama Kakak Asuh PVVD</h2>
+                    <p class="text-xs text-stone-600 mt-1">Dukung masa depan pendidikan adik asuh lainnya yang membutuhkan uluran kasih kita.</p>
+                </div>
+                <a href="{% url 'core:index' %}#skema-donasi" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary hover:bg-[#F8F834] text-brandBlue text-xs font-extrabold shadow-sm whitespace-nowrap">
+                    <span>💛 Berdonasi Sekarang</span>
+                    <span class="w-5 h-5 rounded-full bg-brandBlue text-white flex items-center justify-center text-xs font-bold">↗</span>
+                </a>
+            </div>
+
+        </article>
+
+
+        <!-- Other Recent Activities -->
+        {% if recent_activities %}
+        <div class="pt-6 space-y-4">
+            <h2 class="text-xl font-extrabold text-slate-900">Dokumentasi Kegiatan Lainnya</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {% for other in recent_activities %}
+                <a href="{% url 'core:activity_detail' other.slug %}" class="p-4 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow block">
+                    <span class="text-[11px] font-bold text-brandBlue">📅 {{ other.activity_date|date:"d M Y" }}</span>
+                    <h3 class="text-sm font-bold text-slate-800 line-clamp-2 mt-1 hover:text-brandBlue">{{ other.title }}</h3>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Back Link -->
+        <div class="text-center pt-4">
+            <a href="{% url 'core:index' %}#kegiatan" class="inline-flex items-center gap-2 text-sm font-extrabold text-brandBlue hover:underline">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <span>Kembali ke Beranda & Semua Kegiatan</span>
+            </a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

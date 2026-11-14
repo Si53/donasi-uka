@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layanan Kakak Asuh - Vihara Vimala Dharma Bandung</title>
+    <meta name="description" content="Layanan Kakak Asuh Vihara Vimala Dharma Bandung - Menyalurkan bantuan biaya pendidikan dan mendampingi adik asuh Buddhis secara transparan dan penuh kasih.">
+    
+    <!-- Tailwind CSS (via CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Font: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Alpine.js (via CDN) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        [x-cloak] { display: none !important; }
+        section { scroll-margin-top: 2rem; }
+    </style>
+</head>
+<body class="bg-white text-[#141414] p-3 md:p-6"
+      x-data="{
+          mobileMenuOpen: false,
+          qrisModalOpen: false,
+          selectedActivity: null,
+          activeRegion: 'Pati',
+          activeFaq: 1,
+          donationCalc: {
+              baseAmount: 100000,
+              uniqueCode: Math.floor(100 + Math.random() * 899),
+              get total() {
+                  return parseInt(this.baseAmount || 0) + this.uniqueCode;
+              },
+              formatRupiah(num) {
+                  return new Intl.NumberFormat('id-ID').format(num);
+              }
+          },
+          toast: { show: false, message: '' },
+          showToast(msg) {
+              this.toast.message = msg;
+              this.toast.show = true;
+              setTimeout(() => { this.toast.show = false; }, 3200);
+          },
+          copyRekening(accNumber) {
+              if (navigator.clipboard && window.isSecureContext) {
+                  navigator.clipboard.writeText(accNumber).then(() => {
+                      this.showToast('Nomor Rekening ' + accNumber + ' Berhasil Disalin!');
+                  }).catch(() => {
+                      this.fallbackCopy(accNumber);
+                  });
+              } else {
+                  this.fallbackCopy(accNumber);
+              }
+          },
+          fallbackCopy(text) {
+              const textArea = document.createElement('textarea');
+              textArea.value = text;
+              textArea.style.position = 'fixed';
+              textArea.style.opacity = '0';
+              document.body.appendChild(textArea);
+              textArea.focus();
+              textArea.select();
+              try {
+                  document.execCommand('copy');
+                  this.showToast('Nomor Rekening ' + text + ' Berhasil Disalin!');
+              } catch (err) {
+                  this.showToast('Silakan salin manual: ' + text);
+              }
+              document.body.removeChild(textArea);
+          }
+      }">
+
+    <!-- Toast Notification (Top Center) -->
+    <div x-cloak 
+         x-show="toast.show" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 -translate-y-4"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 -translate-y-4"
+         class="fixed top-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-[#1E8E5A] text-white px-6 py-3 rounded-full shadow-2xl border-2 border-white">
+        <svg class="w-5 h-5 text-[#FFFF55] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span class="text-sm font-semibold tracking-wide" x-text="toast.message"></span>
+    </div>
+
+    <!-- 1. HERO SECTION & NAVBAR -->
+    {% include 'components/hero.html' %}
+
+    <!-- 2. TENTANG KAMI & STATISTIK 6 DAERAH -->
+    {% include 'components/stats_bento.html' %}
+
+    <!-- 3. TIGA PILIHAN SKEMA DONASI -->
+    {% include 'components/donation_schemes.html' %}
+
+    <!-- 4. DOKUMENTASI KEGIATAN PENYALURAN -->
+    {% include 'components/activities.html' %}
+
+    <!-- 5. TESTIMONI ADIK ASUH WISUDA & DONATUR -->
+    {% include 'components/testimonials.html' %}
+
+    <!-- 6. FAQ ACCORDION -->
+    {% include 'components/faq.html' %}
+
+    <!-- 7. BOTTOM CTA BANNER -->
+    {% include 'components/bottom_cta.html' %}
+
+    <!-- 8. FOOTER -->
+    {% include 'components/footer.html' %}
+
+    <!-- 9. MODALS (QRIS & DETAIL KEGIATAN) -->
+    {% include 'components/modals.html' %}
+
+    <!-- 10. FLOATING WHATSAPP BUTTON -->
+    {% include 'components/floating_wa.html' %}
+
+</body>
+</html>

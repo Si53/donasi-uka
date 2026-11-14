@@ -1,0 +1,74 @@
+<!-- ==========================================================
+     6. FAQ ACCORDION (SEKSI TENGAH)
+     ========================================================== -->
+<section id="faq" class="max-w-[960px] mx-auto mt-20 md:mt-28 px-4 sm:px-6">
+    
+    <div class="text-center max-w-xl mx-auto mb-12">
+        <span class="px-4 py-1.5 rounded-full bg-stone-100 text-[#1E8E5A] text-xs font-bold uppercase tracking-wider">
+            Tanya Jawab
+        </span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-[#141414] tracking-tight mt-3 mb-3">
+            Pertanyaan yang Sering Diajukan
+        </h2>
+        <p class="text-sm text-stone-600">
+            Pahami alur donasi dan transparansi penyaluran bantuan di Layanan Kakak Asuh PVVD.
+        </p>
+    </div>
+
+    <div class="space-y-3">
+        
+        <!-- Item 1 -->
+        <div class="bg-stone-50 rounded-2xl border border-stone-200/90 overflow-hidden">
+            <button type="button" 
+                    @click="activeFaq = (activeFaq === 1 ? null : 1)"
+                    class="w-full px-6 py-5 text-left font-bold text-sm sm:text-base text-[#141414] flex items-center justify-between gap-4">
+                <span>1. Apa perbedaan antara "Kakak Asuh" dan "Donatur"?</span>
+                <svg class="w-5 h-5 text-stone-400 transition-transform" :class="activeFaq === 1 ? 'rotate-180 text-[#1E8E5A]' : ''" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div x-cloak x-show="activeFaq === 1" x-collapse class="px-6 pb-6 text-xs sm:text-sm text-stone-600 leading-relaxed border-t border-stone-200/60 pt-4">
+                <strong>Kakak Asuh</strong> adalah divisi relawan di Vihara Vimala Dharma (PVVD) Bandung yang bertugas memverifikasi kebutuhan, menyalurkan bantuan secara utuh, dan memantau adik asuh. Sedangkan <strong>Donatur</strong> adalah masyarakat luas dari seluruh kalangan yang memberikan dukungan materi.
+            </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="bg-stone-50 rounded-2xl border border-stone-200/90 overflow-hidden">
+            <button type="button" 
+                    @click="activeFaq = (activeFaq === 2 ? null : 2)"
+                    class="w-full px-6 py-5 text-left font-bold text-sm sm:text-base text-[#141414] flex items-center justify-between gap-4">
+                <span>2. Bagaimana cara kerja Donatur Tetap? Apakah perlu login website?</span>
+                <svg class="w-5 h-5 text-stone-400 transition-transform" :class="activeFaq === 2 ? 'rotate-180 text-[#1E8E5A]' : ''" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div x-cloak x-show="activeFaq === 2" x-collapse class="px-6 pb-6 text-xs sm:text-sm text-stone-600 leading-relaxed border-t border-stone-200/60 pt-4">
+                <strong>Anda TIDAK perlu membuat akun atau login di website.</strong> Seluruh proses pendaftaran berlangsung praktis melalui aplikasi WhatsApp resmi kami. Laporan nilai rapor dan foto adik asuh akan dikirimkan berkala via WhatsApp.
+            </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="bg-stone-50 rounded-2xl border border-stone-200/90 overflow-hidden">
+            <button type="button" 
+                    @click="activeFaq = (activeFaq === 3 ? null : 3)"
+                    class="w-full px-6 py-5 text-left font-bold text-sm sm:text-base text-[#141414] flex items-center justify-between gap-4">
+                <span>3. Bagaimana cara konfirmasi setelah transfer donasi sekali jalan?</span>
+                <svg class="w-5 h-5 text-stone-400 transition-transform" :class="activeFaq === 3 ? 'rotate-180 text-[#1E8E5A]' : ''" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div x-cloak x-show="activeFaq === 3" x-collapse class="px-6 pb-6 text-xs sm:text-sm text-stone-600 leading-relaxed border-t border-stone-200/60 pt-4">
+                Setelah melakukan transfer antarbank atau scan QRIS, cukup klik tombol <strong>"Kirim Bukti Transfer via WA"</strong> dan kirimkan tangkapan layar bukti transfer ke WhatsApp admin kami untuk pencatatan resmi.
+            </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="bg-stone-50 rounded-2xl border border-stone-200/90 overflow-hidden">
+            <button type="button" 
+                    @click="activeFaq = (activeFaq === 4 ? null : 4)"
+                    class="w-full px-6 py-5 text-left font-bold text-sm sm:text-base text-[#141414] flex items-center justify-between gap-4">
+                <span>4. Apakah ada potongan biaya operasional dari donasi saya?</span>
+                <svg class="w-5 h-5 text-stone-400 transition-transform" :class="activeFaq === 4 ? 'rotate-180 text-[#1E8E5A]' : ''" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div x-cloak x-show="activeFaq === 4" x-collapse class="px-6 pb-6 text-xs sm:text-sm text-stone-600 leading-relaxed border-t border-stone-200/60 pt-4">
+                <strong>Tidak ada potongan sama sekali.</strong> 100% donasi pendidikan yang terkumpul dialokasikan utuh untuk biaya SPP, seragam, dan perlengkapan adik asuh. Biaya operasional relawan ditanggung secara terpisah oleh pengurus.
+            </div>
+        </div>
+
+    </div>
+
+</section>

@@ -1,0 +1,101 @@
+{% load static %}
+<!-- ==========================================
+     9. MODALS (QRIS & DETAIL KEGIATAN)
+     ========================================== -->
+
+<!-- MODAL 1: PERBESAR QRIS -->
+<div x-cloak 
+     x-show="qrisModalOpen" 
+     x-transition:enter="transition ease-out duration-300"
+     x-transition:enter-start="opacity-0"
+     x-transition:enter-end="opacity-100"
+     x-transition:leave="transition ease-in duration-200"
+     x-transition:leave-start="opacity-100"
+     x-transition:leave-end="opacity-0"
+     class="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+    
+    <div @click.away="qrisModalOpen = false"
+         class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative text-center space-y-4">
+        
+        <button @click="qrisModalOpen = false" 
+                type="button" 
+                class="absolute top-4 right-4 p-2 text-stone-400 hover:text-stone-700 rounded-full hover:bg-stone-100">
+            ✕
+        </button>
+
+        <h3 class="text-xl font-extrabold text-[#141414]">QRIS Resmi Layanan Kakak Asuh</h3>
+        <p class="text-xs text-stone-500">Vihara Vimala Dharma (PVVD) Bandung</p>
+
+        <div class="p-3 bg-stone-50 rounded-2xl border border-stone-200 inline-block">
+            <img src="{% static 'images/qris-pvvd.png' %}" 
+                 alt="QRIS Donasi PVVD" 
+                 class="w-64 h-64 sm:w-72 sm:h-72 object-contain mx-auto rounded-xl bg-white p-2">
+        </div>
+
+        <p class="text-xs text-stone-600 leading-relaxed">
+            Mendukung seluruh aplikasi Mobile Banking dan E-Wallet (GoPay, OVO, Dana, ShopeePay).
+        </p>
+
+        <div class="flex items-center justify-center gap-3 pt-2">
+            <a href="{% static 'images/qris-pvvd.png' %}" 
+               download="QRIS-Layanan-Kakak-Asuh-PVVD.png" 
+               class="px-5 py-2.5 rounded-full bg-[#1E8E5A] text-white text-xs font-bold shadow-sm hover:bg-[#166e45] transition">
+                Unduh Gambar QRIS
+            </a>
+            <button type="button" 
+                    @click="qrisModalOpen = false" 
+                    class="px-5 py-2.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold">
+                Tutup
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL 2: DETAIL KEGIATAN -->
+<div x-cloak 
+     x-show="selectedActivity !== null" 
+     x-transition:enter="transition ease-out duration-300"
+     x-transition:enter-start="opacity-0"
+     x-transition:enter-end="opacity-100"
+     x-transition:leave="transition ease-in duration-200"
+     x-transition:leave-start="opacity-100"
+     x-transition:leave-end="opacity-0"
+     class="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+    
+    <div @click.away="selectedActivity = null"
+         class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative space-y-5 max-h-[90vh] overflow-y-auto">
+        
+        <button @click="selectedActivity = null" 
+                type="button" 
+                class="absolute top-4 right-4 p-2 text-stone-400 hover:text-stone-700 rounded-full hover:bg-stone-100">
+            ✕
+        </button>
+
+        <template x-if="selectedActivity">
+            <div class="space-y-4">
+                <span class="px-3 py-1 rounded-full bg-stone-100 text-[#1E8E5A] text-xs font-bold" x-text="selectedActivity.date"></span>
+                <h3 class="text-xl sm:text-2xl font-extrabold text-[#141414] leading-snug" x-text="selectedActivity.title"></h3>
+
+                <template x-if="selectedActivity.image">
+                    <div class="rounded-2xl overflow-hidden shadow max-h-80 bg-stone-100">
+                        <img :src="selectedActivity.image" :alt="selectedActivity.title" class="w-full h-full object-cover">
+                    </div>
+                </template>
+
+                <div class="text-sm text-stone-700 leading-relaxed whitespace-pre-line pt-2" x-text="selectedActivity.content"></div>
+
+                <div class="pt-6 border-t border-stone-100 flex items-center justify-between">
+                    <a :href="'/kegiatan/' + selectedActivity.slug + '/'" 
+                       class="text-xs font-bold text-[#1E8E5A] hover:underline">
+                        Buka Halaman Penuh ↗
+                    </a>
+                    <button type="button" 
+                            @click="selectedActivity = null" 
+                            class="px-6 py-2 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold">
+                        Tutup
+                    </button>
+                </div>
+            </div>
+        </template>
+    </div>
+</div>

@@ -1,0 +1,110 @@
+<!-- ==========================================================
+     2. TENTANG KAMI & STATISTIK 6 DAERAH (SEKSI TENGAH)
+     ========================================================== -->
+<section id="tentang" class="max-w-[1380px] mx-auto mt-16 md:mt-24 px-4 sm:px-6">
+
+    <!-- Header Seksi -->
+    <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="px-4 py-1.5 rounded-full bg-stone-100 text-[#1E8E5A] text-xs font-bold uppercase tracking-wider">
+            Profil & Jangkauan
+        </span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-[#141414] tracking-tight mt-3 mb-3">
+            Jembatan Kebaikan yang Menghubungkan Donatur & Adik Asuh
+        </h2>
+        <p class="text-sm md:text-base text-stone-600">
+            Layanan Kakak Asuh Vihara Vimala Dharma (PVVD) Bandung berfokus pada penyaluran 100% donasi pendidikan tanpa
+            potongan operasional serta pendampingan karakter.
+        </p>
+    </div>
+
+    <!-- 3 Bento Grid Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Kartu 1: 70 Total Adik Asuh -->
+        <div
+            class="bg-stone-50 rounded-[2rem] p-8 border border-stone-200/90 flex flex-col justify-between hover:bg-stone-100/70 transition">
+            <div class="space-y-4">
+                <span class="w-12 h-12 rounded-2xl bg-[#FFFF55] flex items-center justify-center text-2xl shadow-sm">
+                    🎓
+                </span>
+                <div class="text-5xl md:text-6xl font-extrabold text-[#141414] tracking-tight">
+                    {{ total_adik_asuh|default:"70" }}
+                </div>
+                <h3 class="text-xl font-bold text-[#141414]">Total Adik Asuh Aktif</h3>
+                <p class="text-xs md:text-sm text-stone-600 leading-relaxed">
+                    Tersebar dari jenjang Sekolah Dasar (SD), SMP, SMA/SMK, hingga Perguruan Tinggi yang berasal dari
+                    keluarga prasejahtera Buddhis.
+                </p>
+            </div>
+            <div class="pt-6 border-t border-stone-200 mt-6">
+                <span class="text-xs font-bold text-[#1E8E5A] flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-[#1E8E5A]"></span>
+                    100% Tersalurkan Langsung ke SPP & Sekolah
+                </span>
+            </div>
+        </div>
+
+        <!-- Kartu 2: Sebaran 6 Daerah (Interactive Pills) -->
+        <div class="bg-white rounded-[2rem] p-8 border border-stone-200/90 shadow-sm flex flex-col justify-between">
+            <div>
+                <span
+                    class="w-12 h-12 rounded-2xl bg-emerald-50 text-[#1E8E5A] flex items-center justify-center text-2xl mb-4">
+                    📍
+                </span>
+                <h3 class="text-xl font-bold text-[#141414] mb-2">Sebaran {{ region_count|default:"6" }} Daerah Binaan</h3>
+                <p class="text-xs md:text-sm text-stone-600 leading-relaxed mb-6">
+                    Penyaluran bantuan menjangkau pelosok Jawa Tengah dan Jawa Barat dengan pengawasan pengurus Vihara
+                    mitra:
+                </p>
+
+                <!-- Region Pills -->
+                <div class="grid grid-cols-2 gap-2.5">
+                    {% for reg in regions %}
+                    <button type="button" @click="activeRegion = '{{ reg.name }}'"
+                        :class="activeRegion === '{{ reg.name }}' ? 'bg-[#1E8E5A] text-white border-[#1E8E5A]' : 'bg-stone-50 text-stone-700 hover:bg-stone-100 border-stone-200'"
+                        class="px-3.5 py-2.5 rounded-xl text-left text-xs font-bold border transition flex items-center gap-2">
+                        <span>{{ reg.icon }}</span>
+                        <span>{{ reg.name }}</span>
+                    </button>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-stone-100 mt-6 text-xs text-stone-600 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-[#1E8E5A] flex-shrink-0 animate-pulse"></span>
+                <span>Wilayah aktif: <strong class="text-[#1E8E5A]" x-text="activeRegion">Pati</strong> — terpantau aktif oleh relawan binaan.</span>
+            </div>
+        </div>
+
+        <!-- Kartu 3: Peran Donatur vs Kakak Asuh -->
+        <div class="bg-[#1E8E5A] text-white rounded-[2rem] p-8 flex flex-col justify-between shadow-md">
+            <div class="space-y-4">
+                <span class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-2xl">
+                    🤝
+                </span>
+                <h3 class="text-xl font-bold text-white">Alur Gotong Royong</h3>
+
+                <div class="space-y-3 pt-2 text-xs text-emerald-100">
+                    <div class="p-3 bg-white/10 rounded-xl">
+                        <strong class="text-white block text-sm">1. Donatur (Umat Buddha)</strong>
+                        Terbuka bagi seluruh kalangan untuk menyalurkan dana bantuan tanpa perlu login website.
+                    </div>
+                    <div class="p-3 bg-white/10 rounded-xl">
+                        <strong class="text-white block text-sm">2. Kakak Asuh PVVD (Pemuda)</strong>
+                        Memverifikasi kebutuhan, membayarkan biaya sekolah, dan memantau adik asuh.
+                    </div>
+                    <div class="p-3 bg-white/10 rounded-xl">
+                        <strong class="text-white block text-sm">3. Laporan Personal WhatsApp</strong>
+                        Donatur menerima foto kegiatan dan kabar rapor langsung ke nomor WhatsApp.
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-emerald-600/50 mt-4 text-[11px] text-emerald-200 font-medium">
+                100% Relawan Vihara Vimala Dharma Bandung
+            </div>
+        </div>
+
+    </div>
+
+</section>

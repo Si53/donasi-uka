@@ -1,0 +1,149 @@
+<!-- ==========================================================
+     4. DOKUMENTASI KEGIATAN PENYALURAN (ActivityPost Django)
+     ========================================================== -->
+<section id="kegiatan" class="max-w-[1380px] mx-auto mt-20 md:mt-28 px-4 sm:px-6">
+    
+    <!-- Header Seksi & Tombol Admin -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-stone-200 mb-10">
+        <div>
+            <span class="px-4 py-1.5 rounded-full bg-stone-100 text-[#1E8E5A] text-xs font-bold uppercase tracking-wider">
+                Dokumentasi & Berita
+            </span>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-[#141414] tracking-tight mt-3">
+                Penyaluran Bantuan & Aktivitas Adik Asuh
+            </h2>
+            <p class="text-xs sm:text-sm text-stone-600 mt-2">
+                Bukti nyata penyaluran dana pendidikan yang dikelola oleh tim Kakak Asuh VVD secara transparan.
+            </p>
+        </div>
+        <div>
+            <a href="{% url 'admin:core_activitypost_changelist' %}" 
+               target="_blank" 
+               rel="noopener"
+               class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition">
+                <svg class="w-4 h-4 text-stone-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                <span>Kelola Dokumentasi (Admin)</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Grid Berita / Kegiatan -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        {% if has_activities %}
+            {% for post in activities %}
+            <article class="bg-white rounded-[2rem] border border-stone-200/90 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between group">
+                <div>
+                    <!-- Foto Kegiatan -->
+                    <div class="aspect-[16/10] bg-stone-100 relative overflow-hidden">
+                        {% if post.thumbnail %}
+                        <img src="{{ post.thumbnail.url }}" 
+                             alt="{{ post.title }}" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        {% else %}
+                        <div class="w-full h-full relative overflow-hidden flex flex-col justify-end p-6 {% cycle 'bg-gradient-to-br from-[#1E8E5A] to-[#14532d]' 'bg-gradient-to-br from-[#0018A8] to-[#1e1b4b]' 'bg-gradient-to-br from-amber-600 to-amber-900' %} text-white">
+                            <!-- Background Subtle Decoration -->
+                            <div class="absolute -right-6 -bottom-6 w-32 h-32 rounded-full bg-white/10 blur-sm pointer-events-none"></div>
+                            <div class="absolute top-3.5 right-4 text-3xl opacity-90 drop-shadow-sm">
+                                {% cycle '🎒' '📝' '🎓' %}
+                            </div>
+                            <div class="relative z-10">
+                                <span class="px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-sm text-[10px] font-extrabold uppercase tracking-wider text-white inline-block mb-1">
+                                    {% cycle 'Penyaluran SPP' 'Monitoring Rapor' 'Apresiasi Kelulusan' %}
+                                </span>
+                                <span class="text-sm font-bold text-white tracking-tight block">Dokumentasi Kakak Asuh PVVD</span>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <!-- Badge Tanggal -->
+                        <div class="absolute top-3.5 left-3.5 bg-white/95 backdrop-blur-sm px-3.5 py-1 rounded-full text-xs font-bold text-[#141414] shadow-sm">
+                            📅 {{ post.activity_date|date:"d M Y" }}
+                        </div>
+                    </div>
+
+                    <!-- Konten Teks -->
+                    <div class="p-6 space-y-2.5">
+                        <h3 class="text-lg font-bold text-[#141414] group-hover:text-[#1E8E5A] transition leading-snug line-clamp-2 min-h-[3.25rem]">
+                            {{ post.title }}
+                        </h3>
+                        <p class="text-xs sm:text-sm text-stone-600 leading-relaxed line-clamp-3">
+                            {{ post.excerpt }}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tombol Baca Selengkapnya (Modal) -->
+                <div class="px-6 pb-6 pt-2 flex items-center justify-between border-t border-stone-100 mt-2">
+                    <button type="button" 
+                            @click="selectedActivity = {
+                                title: '{{ post.title|escapejs }}',
+                                date: '{{ post.activity_date|date:"d F Y" }}',
+                                image: '{% if post.thumbnail %}{{ post.thumbnail.url }}{% endif %}',
+                                content: `{{ post.content|escapejs }}`,
+                                slug: '{{ post.slug }}'
+                            }"
+                            class="text-xs sm:text-sm font-extrabold text-[#1E8E5A] hover:underline inline-flex items-center gap-1.5">
+                        <span>Baca Selengkapnya</span>
+                        <span>↗</span>
+                    </button>
+
+                    <a href="{% url 'core:activity_detail' post.slug %}" 
+                       class="text-xs text-stone-400 hover:text-stone-600">
+                        Halaman Penuh
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+
+        {% else %}
+            <!-- 3 Kartu Contoh Fallback Jika DB Masih Kosong -->
+            <article class="bg-white rounded-[2rem] border border-stone-200 overflow-hidden shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="aspect-[16/10] bg-amber-100 flex items-center justify-center text-4xl">
+                        🎒
+                    </div>
+                    <div class="p-6 space-y-2">
+                        <span class="text-xs font-bold text-[#1E8E5A]">📅 15 September 2026</span>
+                        <h3 class="text-lg font-bold text-[#141414]">Penyaluran SPP Semester Gasal Adik Asuh Pati & Jepara</h3>
+                        <p class="text-xs text-stone-600 leading-relaxed">
+                            Penyaluran bantuan biaya sekolah bagi 24 adik asuh di Jawa Tengah mencakup pembayaran SPP, seragam, dan buku pelajaran.
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-[2rem] border border-stone-200 overflow-hidden shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="aspect-[16/10] bg-blue-100 flex items-center justify-center text-4xl">
+                        📝
+                    </div>
+                    <div class="p-6 space-y-2">
+                        <span class="text-xs font-bold text-[#1E8E5A]">📅 20 Agustus 2026</span>
+                        <h3 class="text-lg font-bold text-[#141414]">Monitoring Rapor & Paket Nutrisi Adik Asuh Sukabumi</h3>
+                        <p class="text-xs text-stone-600 leading-relaxed">
+                            Evaluasi kemajuan nilai rapor semester dan pembagian suplemen kesehatan bagi adik asuh jenjang SD dan SMP.
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-[2rem] border border-stone-200 overflow-hidden shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="aspect-[16/10] bg-emerald-100 flex items-center justify-center text-4xl">
+                        🎓
+                    </div>
+                    <div class="p-6 space-y-2">
+                        <span class="text-xs font-bold text-[#1E8E5A]">📅 10 Juli 2026</span>
+                        <h3 class="text-lg font-bold text-[#141414]">Apresiasi Kelulusan Siswa Berprestasi Wonosobo</h3>
+                        <p class="text-xs text-stone-600 leading-relaxed">
+                            Serah terima dana apresiasi kelulusan bagi adik asuh yang lulus dengan predikat terbaik dan persiapan beasiswa kuliah.
+                        </p>
+                    </div>
+                </div>
+            </article>
+        {% endif %}
+
+    </div>
+
+</section>
